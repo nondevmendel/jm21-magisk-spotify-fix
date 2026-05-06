@@ -1,0 +1,6 @@
+id=spotify_sdcard_fix
+name=Spotify SD Card Boot Fix
+version=v1
+versionCode=1
+author=nondevmendel
+description=Delays Spotify start until SD card is mounted at boot
