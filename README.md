@@ -138,7 +138,11 @@ while [ "$(find /storage/* -maxdepth 0 2>/dev/null | wc -l)" != "3" ]; do
   sleep 8
 done
 
-# SD card is mounted — re-enable Spotify
+# Ensure WiFi interface is up so Spotify doesn't stall on its network check
+svc wifi enable
+sleep 2
+
+# Re-enable Spotify
 pm enable com.spotify.music
 ```
 
@@ -154,14 +158,6 @@ OTA updates overwrite `init_boot` on the new slot, removing root. To re-root aft
 4. The Spotify fix module survives firmware updates — it will be active again automatically after re-rooting
 
 ---
-
-## Known Quirks
-
-**Spotify won't load until WiFi is toggled on (even without a connection)**
-
-Spotify checks for a network interface at startup, not actual internet connectivity. With WiFi off there's no interface, so Spotify stalls. Toggling WiFi on (even unconnected) satisfies the check.
-
-Workaround: add `svc wifi enable && sleep 2` to `service.sh` before `pm enable com.spotify.music` if you want Spotify to always load at boot regardless of WiFi state.
 
 ---
 

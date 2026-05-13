@@ -17,5 +17,9 @@ while [ "$A" != "3" ]; do
   A=$(find /storage/* -maxdepth 0 2>/dev/null | wc -l)
 done
 
-# SD card is mounted — re-enable Spotify
+# SD card is mounted — ensure WiFi interface is up so Spotify doesn't stall
+svc wifi enable
+sleep 2
+
+# Re-enable Spotify
 pm enable com.spotify.music
