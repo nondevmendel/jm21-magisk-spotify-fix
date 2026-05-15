@@ -130,7 +130,12 @@ Download `spotify_sdcard_fix.zip` from [Releases](../../releases) and push it to
 `service.sh` runs as root at late-start boot via Magisk:
 
 ```sh
-# Disable Spotify immediately after boot completes
+# Wait for boot to complete
+while [ "$(getprop sys.boot_completed | tr -d '\r')" != "1" ]; do
+  sleep 2
+done
+
+# Disable Spotify so it can't run before SD card mounts
 pm disable com.spotify.music
 
 # Wait until /storage/ has 3 entries (emulated + SD card UUID + self)
